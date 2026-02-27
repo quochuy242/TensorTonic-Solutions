@@ -6,9 +6,8 @@ def popularity_ranking(items, min_votes, global_mean):
     # Write code here
     items = np.asarray(items, dtype=float)
 
-    R = items[:, 0]
-    v = items[:, 1]
-    m = min_votes
-    C = global_mean
-    denom = v + m
-    return ((v * R + m * C) / denom).tolist()
+    avg_rating = items[:, 0]
+    num_votes = items[:, 1]
+    denom = num_votes + min_votes
+    result = (num_votes * avg_rating + min_votes * global_mean) / denom
+    return result.tolist()
