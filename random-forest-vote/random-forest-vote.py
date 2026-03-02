@@ -8,14 +8,14 @@ def random_forest_vote(predictions):
     preds = np.asarray(predictions, dtype=int)
 
     if preds.ndim == 1:
-        preds = preds.reshape(1, -1)
+        preds = preds[None, :]
 
-    n_samples = preds.shape[1]
+    n_classes = preds.max() + 1
 
-    result = np.zeros(n_samples, dtype=int)
+    votes = np.apply_along_axis(
+        lambda x: np.bincount(x, minlength=n_classes).argmax(),
+        axis=0,
+        arr=preds 
+    )
 
-    for i in range(n_samples):
-        values, counts = np.unique(preds[:, i], return_counts=True)
-        result[i] = values[np.argmax(counts)]
-    
-    return result.tolist()
+    return votes.tolist()
