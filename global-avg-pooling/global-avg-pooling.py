@@ -12,8 +12,8 @@ def global_avg_pool(x):
         raise ValueError("Support (C,H,W) and (N,C,H,W)")
     
     H, W = x.shape[-2:]
-    gap = x.sum(axis=(-2, -1)) / (H * W)
+    result = x.sum(axis=(-2, -1)) / (H * W)
     
-    return gap
+    return result
     
     
