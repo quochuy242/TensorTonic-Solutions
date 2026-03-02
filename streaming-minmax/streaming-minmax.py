@@ -28,8 +28,7 @@ def streaming_minmax_update(state, X_batch, eps=1e-8):
     state['min'] = np.minimum(state['min'], batch_min)
     state['max'] = np.maximum(state['max'], batch_max)
 
-    diff_vals = state['max'] - state['min']
-    diff_vals = np.where(diff_vals < eps, 1.0, diff_vals)
+    diff_vals = state['max'] - state['min'] + eps
 
     X_norm = (X_batch - state['min']) / diff_vals
     return X_norm 
